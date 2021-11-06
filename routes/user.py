@@ -45,7 +45,7 @@ def user_login(auth: Auth):
       return user
     return Response(status_code=HTTP_401_UNAUTHORIZED)
   except:
-    return Response(status_code=HTTP_401_UNAUTHORIZED)
+    return Response(status_code=HTTP_401_UNAUTHORIZED) 
     
 
 
