@@ -12,28 +12,6 @@ from fastapi import FastAPI, HTTPException
 
 user = APIRouter()
 
-# METODO GetUser
-@user.get('/users', response_model=list[User], tags=['USERS'])
-def find_all_user():
-    return usersEntity(conex.local.user.find())
-
-
-# METODO CreateUser
-@user.post('/users', response_model=User, tags=['USERS'])
-def create_user(user: User):
-    new_user = dict(user)
-    new_user['password'] = sha256_crypt.encrypt(new_user['password'])
-    del new_user['id']
-    id = conex.local.user.insert_one(new_user).inserted_id
-    user = conex.local.user.find_one({'_id': id})
-    return userEntity(user)
-
-
-# METODO GetUser
-@user.get('/users/ {id}', response_model=list[User], tags=['USERS'])
-def find_user(id: str):
-    return userEntity(conex.local.user.find_one({"_id": ObjectId(id)}))
-
 
 # METODO Login
 @user.post('/login', tags=['LOGIN'])
@@ -45,8 +23,29 @@ def user_login(auth: Auth):
     return Response(status_code=HTTP_401_UNAUTHORIZED)
   except:
     return Response(status_code=HTTP_401_UNAUTHORIZED) 
-    
 
+
+# METODO GetUser ALl Users
+@user.get('/users', response_model=list[User], tags=['USERS'])
+def find_all_user():
+    return usersEntity(conex.local.user.find())
+
+
+# METODO GetUser One User.
+@user.get('/users/ {id}', response_model=list[User], tags=['USERS'])
+def find_user(id: str):
+    return userEntity(conex.local.user.find_one({"_id": ObjectId(id)}))
+
+
+# METODO CreateUser
+@user.post('/users', response_model=User, tags=['LOGIN'])
+def create_user(user: User):
+    new_user = dict(user)
+    new_user['password'] = sha256_crypt.encrypt(new_user['password'])
+    del new_user['id']
+    id = conex.local.user.insert_one(new_user).inserted_id
+    user = conex.local.user.find_one({'_id': id})
+    return userEntity(user)
 
 
 # METODO UPDATE (PUT)

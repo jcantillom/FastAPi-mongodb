@@ -8,7 +8,6 @@ class User(BaseModel):
          last_name : Optional [str]
          date_birth : Optional [str]
          address : Optional [str]
-         token :  str
          password : Optional [str]
          email : Optional [str]
          mobil_phone: Optional [str]

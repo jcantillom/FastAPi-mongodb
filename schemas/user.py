@@ -5,7 +5,6 @@ def userEntity(item) -> dict:
             'last_name': item['last_name'],
             'date_birth': item['date_birth'],
             'address': item['address'],
-            'token': item['token'],
             'password': item['password'],
             'email': item['email'],
             'mobil_phone': item['mobil_phone'],
@@ -15,4 +14,3 @@ def userEntity(item) -> dict:
 
 def usersEntity (entity) ->  list:
      return[userEntity(item)for item in entity]
-     
